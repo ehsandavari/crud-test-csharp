@@ -1,7 +1,7 @@
 version: '3.9'
 
 services:
-  service:
+  crud:
     build:
       context: .
       dockerfile: Dockerfile
@@ -11,7 +11,7 @@ services:
     depends_on:
       - postgres
     networks:
-      - backend
+      - crud
   
   
   postgres:
@@ -26,7 +26,7 @@ services:
     volumes:
       - posgresql:/var/lib/postgresql/data
     networks:
-      - backend
+      - crud
   
   
   pgadmin:
@@ -42,10 +42,10 @@ services:
     depends_on:
       - postgres
     networks:
-      - backend
+      - crud
 
 networks:
-  backend:
+  crud:
 
 volumes:
   posgresql:

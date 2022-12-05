@@ -20,12 +20,12 @@ public class CreateCustomerRequestDto
         BankAccountNumber = bankAccountNumber;
     }
 
-    [Required] public string FirstName { get; }
-    [Required] public string LastName { get; }
-    [Required] public DateTime DateOfBirth { get; }
-    [Required] public PhoneNumber PhoneNumber { get; }
-    [Required] [EmailAddress] public string Email { get; }
-    [Required] [Iban] public string BankAccountNumber { get; }
+    [Required] public string FirstName { get; set; }
+    [Required] public string LastName { get; set; }
+    [Required] public DateTime DateOfBirth { get; set; }
+    [Required] public PhoneNumber PhoneNumber { get; set; }
+    [Required] [EmailAddress] public string Email { get; set; }
+    [Required] [Iban] public string BankAccountNumber { get; set; }
 }
 
 public static class CreateCustomerRequestDtoMapper

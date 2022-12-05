@@ -45,6 +45,5 @@ if (webApplication.Environment.IsDevelopment())
 
 webApplication.UseRequestLocalization(webApplication.Services.GetService<IOptions<RequestLocalizationOptions>>()!
     .Value);
-webApplication.UseStaticFiles();
 webApplication.MapControllers();
 webApplication.Run();
