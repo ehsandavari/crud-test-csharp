@@ -9,16 +9,14 @@
     }
   },
   "profiles": {
-    "AAA": {
+    "Mc2.CrudTest": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": false,
       "launchUrl": "swagger",
-      "applicationUrl": "http://localhost:8000",
+      "applicationUrl": "http://0.0.0.0:80",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development",
-        "FILE_URL": "http://localhost:8000/",
-        "CORE_SERVICE_URL": "http://localhost:3008/api"
+        "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
     "IIS Express": {

@@ -1,6 +1,7 @@
 using Application;
 using Infrastructure;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Persistence;
 using Presentation;
@@ -20,12 +21,14 @@ builder.Services.AddControllers(options =>
 builder.Services.AddPresentation(builder.Configuration);
 
 var webApplication = builder.Build();
+using (var scope = webApplication.Services.CreateScope())
+{
+    scope.ServiceProvider.GetRequiredService<DataBaseContext>().Database.Migrate();
+}
 
 var allowedOrigins = new[]
 {
-    "http://localhost:3000",
-    "http://localhost:3001",
-    "http://localhost:9999"
+    "http://localhost:8000"
 };
 
 webApplication.UseCors(b =>
@@ -43,7 +46,5 @@ if (webApplication.Environment.IsDevelopment())
 webApplication.UseRequestLocalization(webApplication.Services.GetService<IOptions<RequestLocalizationOptions>>()!
     .Value);
 webApplication.UseStaticFiles();
-webApplication.UseAuthentication();
-webApplication.UseAuthorization();
 webApplication.MapControllers();
 webApplication.Run();

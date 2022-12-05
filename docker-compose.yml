@@ -1,0 +1,52 @@
+version: '3.9'
+
+services:
+  service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:80"
+    restart: always
+    depends_on:
+      - postgres
+    networks:
+      - backend
+  
+  
+  postgres:
+    image: postgres:latest
+    ports:
+      - "5434:5432"
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: Mc2.CrudTest
+    volumes:
+      - posgresql:/var/lib/postgresql/data
+    networks:
+      - backend
+  
+  
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    ports:
+      - "5055:80"
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+    depends_on:
+      - postgres
+    networks:
+      - backend
+
+networks:
+  backend:
+
+volumes:
+  posgresql:
+  pgadmin:
