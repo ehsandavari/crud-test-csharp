@@ -1,3 +1,4 @@
+using BddTests.Drivers;
 using PhoneNumbers;
 using Presentation.Dto.RequestsDto.Customer;
 
@@ -6,61 +7,46 @@ namespace BddTests.Steps;
 [Binding]
 public class CustomerSteps
 {
-    private const string BaseUrl = "http://0.0.0.0:80";
+    private const string BaseUrl = "http://localhost:8000";
 
-    private readonly CreateCustomerRequestDto _createCustomerRequestDto;
+    private readonly ScenarioContext _scenarioContext;
+    private readonly WebDriver _webDriver;
 
-    public CustomerSteps(CreateCustomerRequestDto createCustomerRequestDto)
+    public CustomerSteps(ScenarioContext scenarioContext, WebDriver webDriver)
     {
-        _createCustomerRequestDto = createCustomerRequestDto;
+        _scenarioContext = scenarioContext;
+        _webDriver = webDriver;
     }
 
-
-    [Given(@"I input firstName ""(.*)""")]
-    public void GivenIInputFirstName(string firstName)
+    [Given(@"I have a web client")]
+    public void GivenIHaveAWebClient()
     {
-        _createCustomerRequestDto.FirstName = firstName;
+        _webDriver.InitializeHttpClient();
     }
 
-    [Given(@"I input lastName ""(.*)""")]
-    public void GivenIInputLastName(string lastName)
+    [Given(@"I have a valid customer")]
+    public void GivenIHaveAValidCustomer()
     {
-        _createCustomerRequestDto.LastName = lastName;
+        _scenarioContext.Set(new CreateCustomerRequestDto
+        (
+            "ehsan",
+            "davari",
+            new DateTime(),
+            new PhoneNumber(),
+            "ehsandavari@gmail.com",
+            "1002212121665"
+        ));
     }
 
-    [Given(@"I input dateOfBirth ""(.*)""")]
-    public void GivenIInputDateOfBirth(DateTime dateOfBirth)
+    [When(@"I send a GET request to the '(.*)' endpoint")]
+    public async Task WhenISendAGETRequestToTheApiCustomersEndpoint(string url)
     {
-        _createCustomerRequestDto.DateOfBirth = dateOfBirth;
+        await _webDriver.HttpClientGet(BaseUrl + url);
     }
 
-    [Given(@"I input phoneNumber ""(.*)""")]
-    public void GivenIInputPhoneNumber(PhoneNumber phoneNumber)
+    [Then(@"I should receive a '(.*)' response")]
+    public void ThenIShouldReceiveAResponse(int statusCode)
     {
-        _createCustomerRequestDto.PhoneNumber = phoneNumber;
-    }
-
-    [Given(@"I input email ""(.*)""")]
-    public void GivenIInputEmail(string email)
-    {
-        _createCustomerRequestDto.Email = email;
-    }
-
-    [Given(@"I input bankAccountNumber ""(.*)""")]
-    public void GivenIInputBankAccountNumber(string bankAccountNumber)
-    {
-        _createCustomerRequestDto.BankAccountNumber = bankAccountNumber;
-    }
-
-    [When(@"I send create user request")]
-    public void WhenISendCreateUserRequest()
-    {
-        ScenarioContext.StepIsPending();
-    }
-
-    [Then(@"validate user is created")]
-    public void ThenValidateUserIsCreated()
-    {
-        ScenarioContext.StepIsPending();
-    }
+        _webDriver.CheckResponseStatusCode(statusCode);
+    } 
 }

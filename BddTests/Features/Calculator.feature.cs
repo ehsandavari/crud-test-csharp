@@ -19,7 +19,7 @@ namespace BddTests.Features
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.9.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public partial class CustomerFeature : object, Xunit.IClassFixture<CustomerFeature.FixtureData>, System.IDisposable
+    public partial class CRUDAPIFeature : object, Xunit.IClassFixture<CRUDAPIFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
@@ -31,7 +31,7 @@ namespace BddTests.Features
 #line 1 "Calculator.feature"
 #line hidden
         
-        public CustomerFeature(CustomerFeature.FixtureData fixtureData, BddTests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
+        public CRUDAPIFeature(CRUDAPIFeature.FixtureData fixtureData, BddTests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
         {
             this._testOutputHelper = testOutputHelper;
             this.TestInitialize();
@@ -40,7 +40,7 @@ namespace BddTests.Features
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "Customer", null, ProgrammingLanguage.CSharp, featureTags);
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "CRUD API", "I want to be able to create, read, update, and delete customers", ProgrammingLanguage.CSharp, featureTags);
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -80,18 +80,16 @@ namespace BddTests.Features
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Add a customer")]
-        [Xunit.TraitAttribute("FeatureTitle", "Customer")]
-        [Xunit.TraitAttribute("Description", "Add a customer")]
-        [Xunit.TraitAttribute("Category", "create")]
-        public void AddACustomer()
+        [Xunit.SkippableFactAttribute(DisplayName="Create customer")]
+        [Xunit.TraitAttribute("FeatureTitle", "CRUD API")]
+        [Xunit.TraitAttribute("Description", "Create customer")]
+        public void CreateCustomer()
         {
-            string[] tagsOfScenario = new string[] {
-                    "create"};
+            string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Add a customer", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create customer", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 4
-this.ScenarioInitialize(scenarioInfo);
+    this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
             {
@@ -101,28 +99,16 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 5
- testRunner.Given("I input firstName \"firstName\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+        testRunner.Given("I have a web client", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 6
- testRunner.And("I input lastName \"lastName\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+        testRunner.And("I have a valid customer", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 7
- testRunner.And("I input dateOfBirth \"dateOfBirth\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+        testRunner.When("I send a GET request to the \'/public/customer/get/1\' endpoint", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 8
- testRunner.And("I input phoneNumber \"phoneNumber\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-#line 9
- testRunner.And("I input email \"email\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-#line 10
- testRunner.And("I input bankAccountNumber \"bankAccountNumber\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-#line 11
- testRunner.When("I send create user request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 12
- testRunner.Then("validate user is created", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+        testRunner.Then("I should receive a \'200\' response", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -135,12 +121,12 @@ this.ScenarioInitialize(scenarioInfo);
             
             public FixtureData()
             {
-                CustomerFeature.FeatureSetup();
+                CRUDAPIFeature.FeatureSetup();
             }
             
             void System.IDisposable.Dispose()
             {
-                CustomerFeature.FeatureTearDown();
+                CRUDAPIFeature.FeatureTearDown();
             }
         }
     }

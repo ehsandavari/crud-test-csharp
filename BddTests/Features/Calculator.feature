@@ -1,12 +1,9 @@
-﻿Feature: Customer
+﻿Feature: CRUD API
+I want to be able to create, read, update, and delete customers
 
-@create
-Scenario: Add a customer
-	Given I input firstName "firstName"
-	And I input lastName "lastName"
-	And I input dateOfBirth "dateOfBirth"
-	And I input phoneNumber "phoneNumber"
-	And I input email "email"
-	And I input bankAccountNumber "bankAccountNumber"
-	When I send create user request
-	Then validate user is created
+    Scenario: Create customer
+        Given I have a web client
+        And I have a valid customer
+        When I send a GET request to the '/public/customer/get/1' endpoint
+        Then I should receive a '404' response
+        And I should receive a '404' response
