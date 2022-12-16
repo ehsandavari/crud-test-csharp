@@ -20,5 +20,5 @@ public class UnitOfWork : IUnitOfWork
         return _context.SaveChangesAsync(cancellationToken);
     }
 
-    void IDisposable.Dispose() => _context.Dispose(); 
+    public void Dispose() => _context.Dispose(); 
 }
