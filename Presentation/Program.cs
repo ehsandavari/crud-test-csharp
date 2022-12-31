@@ -17,7 +17,7 @@ builder.Services.AddControllers(options =>
     options.Filters.Add<ApiExceptionFilterAttribute>();
     options.Filters.Add<ApiActionFilterAttribute>();
     options.Conventions.Add(new RouteTokenTransformerConvention(new SlugifyParameterTransformer()));
-});
+}).AddJsonOptions(options => { options.JsonSerializerOptions.Converters.Add(new DateOnlyJsonConverter()); });
 builder.Services.AddPresentation(builder.Configuration);
 
 var webApplication = builder.Build();

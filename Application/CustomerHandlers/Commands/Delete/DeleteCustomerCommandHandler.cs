@@ -5,11 +5,11 @@ using Domain.Interfaces;
 
 namespace Application.CustomerHandlers.Commands.Delete;
 
-public class DeleteCustomer : IBaseCommandHandler<DeleteCustomerCommand, bool>
+public class DeleteCustomerCommandHandler : IBaseCommandHandler<DeleteCustomerCommand, bool>
 {
     private readonly IUnitOfWork _unitOfWork;
 
-    public DeleteCustomer(IUnitOfWork unitOfWork)
+    public DeleteCustomerCommandHandler(IUnitOfWork unitOfWork)
     {
         _unitOfWork = unitOfWork;
     }

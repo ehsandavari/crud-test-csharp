@@ -1,52 +1,68 @@
+using Application.Common.Exceptions;
 using BddTests.Drivers;
-using PhoneNumbers;
-using Presentation.Dto.RequestsDto.Customer;
+using TechTalk.SpecFlow.Assist;
 
 namespace BddTests.Steps;
 
 [Binding]
-public class CustomerSteps
+public class CustomerManagerSteps
 {
     private const string BaseUrl = "http://localhost:8000";
 
     private readonly ScenarioContext _scenarioContext;
     private readonly WebDriver _webDriver;
 
-    public CustomerSteps(ScenarioContext scenarioContext, WebDriver webDriver)
+    public CustomerManagerSteps(ScenarioContext scenarioContext, WebDriver webDriver)
     {
         _scenarioContext = scenarioContext;
         _webDriver = webDriver;
     }
 
-    [Given(@"I have a web client")]
-    public void GivenIHaveAWebClient()
+    [Given(@"http client requester")]
+    public void GivenHttpClientRequester()
     {
         _webDriver.InitializeHttpClient();
     }
 
-    [Given(@"I have a valid customer")]
-    public void GivenIHaveAValidCustomer()
+    [Given(@"system error codes are following")]
+    public void GivenSystemErrorCodesAreFollowing(Table table)
     {
-        _scenarioContext.Set(new CreateCustomerRequestDto
-        (
-            "ehsan",
-            "davari",
-            new DateTime(),
-            new PhoneNumber(),
-            "ehsandavari@gmail.com",
-            "1002212121665"
-        ));
+        _scenarioContext.Set(table.CreateSet<BaseHttpException>());
     }
 
-    [When(@"I send a GET request to the '(.*)' endpoint")]
-    public async Task WhenISendAGETRequestToTheApiCustomersEndpoint(string url)
+    [When(@"user creates a customer with following data by sending '(.*)'")]
+    public void WhenUserCreatesACustomerWithFollowingDataBySending(string p0, Table table)
     {
-        await _webDriver.HttpClientGet(BaseUrl + url);
+        _webDriver.HttpClientPost(BaseUrl + "", "");
     }
 
-    [Then(@"I should receive a '(.*)' response")]
-    public void ThenIShouldReceiveAResponse(int statusCode)
+    [Then(@"user can lookup all customers and filter by below properties and get '(.*)' records")]
+    public void ThenUserCanLookupAllCustomersAndFilterByBelowPropertiesAndGetRecords(string p0, Table table)
     {
-        _webDriver.CheckResponseStatusCode(statusCode);
-    } 
+        ScenarioContext.StepIsPending();
+    }
+
+    [Then(@"user gets error with code '(.*)'")]
+    public void ThenUserGetsErrorWithCode(string p0)
+    {
+        ScenarioContext.StepIsPending();
+    }
+
+    [When(@"user edit customer with new data")]
+    public void WhenUserEditCustomerWithNewData(Table table)
+    {
+        ScenarioContext.StepIsPending();
+    }
+
+    [When(@"user delete customer by Email of '(.*)'")]
+    public void WhenUserDeleteCustomerByEmailOf(string p0)
+    {
+        ScenarioContext.StepIsPending();
+    }
+
+    [Then(@"user can get all records and get '(.*)' records")]
+    public void ThenUserCanGetAllRecordsAndGetRecords(string p0)
+    {
+        ScenarioContext.StepIsPending();
+    }
 }

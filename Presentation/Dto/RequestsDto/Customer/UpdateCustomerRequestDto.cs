@@ -4,12 +4,13 @@ using Application.Common.Exceptions;
 using Application.CustomerHandlers.Commands.Update;
 using IbanNet.DataAnnotations;
 using PhoneNumbers;
+using PhoneNumber = Domain.ValueObject.PhoneNumber;
 
 namespace Presentation.Dto.RequestsDto.Customer;
 
 public class UpdateCustomerRequestDto
 {
-    public UpdateCustomerRequestDto(string firstName, string lastName, DateTime dateOfBirth, PhoneNumber phoneNumber,
+    public UpdateCustomerRequestDto(string firstName, string lastName, DateOnly dateOfBirth, string phoneNumber,
         string email, string bankAccountNumber)
     {
         FirstName = firstName;
@@ -22,8 +23,8 @@ public class UpdateCustomerRequestDto
 
     [Required] public string FirstName { get; }
     [Required] public string LastName { get; }
-    [Required] public DateTime DateOfBirth { get; }
-    [Required] public PhoneNumber PhoneNumber { get; }
+    [Required] public DateOnly DateOfBirth { get; }
+    [Required] public string PhoneNumber { get; }
     [Required] [EmailAddress] public string Email { get; }
     [Required] [Iban] public string BankAccountNumber { get; }
 }
@@ -33,7 +34,8 @@ public static class UpdateCustomerRequestDtoMapper
     public static UpdateCustomerCommand ToUpdateCustomerCommand(
         this UpdateCustomerRequestDto updateCustomerRequestDto, long id)
     {
-        if (PhoneNumberUtil.GetInstance().IsValidNumber(updateCustomerRequestDto.PhoneNumber) is not true)
+        var phoneNumber = PhoneNumberUtil.GetInstance().Parse(updateCustomerRequestDto.PhoneNumber, "");
+        if (PhoneNumberUtil.GetInstance().IsValidNumber(phoneNumber) is not true)
         {
             throw new BaseHttpException(HttpStatusCode.BadRequest, HttpExceptionTypes.PhoneNumberIsNotValid);
         }
@@ -44,7 +46,7 @@ public static class UpdateCustomerRequestDtoMapper
             FirstName: updateCustomerRequestDto.FirstName,
             LastName: updateCustomerRequestDto.LastName,
             DateOfBirth: updateCustomerRequestDto.DateOfBirth,
-            PhoneNumber: updateCustomerRequestDto.PhoneNumber.ToString()!,
+            PhoneNumber: new PhoneNumber(phoneNumber.CountryCode, phoneNumber.NationalNumber),
             Email: updateCustomerRequestDto.Email,
             BankAccountNumber: updateCustomerRequestDto.BankAccountNumber
         );

@@ -1,5 +1,6 @@
 ﻿using Application.Common.Models;
 using Domain.Entities;
+using Domain.ValueObject;
 
 namespace Application.CustomerHandlers.Queries.GetById.VirtualModels;
 
@@ -7,8 +8,8 @@ public record GetCustomerByIdVirtualModel
 (
     string FirstName,
     string LastName,
-    DateTime DateOfBirth,
-    string PhoneNumber,
+    DateOnly DateOfBirth,
+    PhoneNumber PhoneNumber,
     string Email,
     string BankAccountNumber
 ) : BaseVirtualModel;
