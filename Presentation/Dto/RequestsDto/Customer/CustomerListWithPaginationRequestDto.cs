@@ -1,12 +1,17 @@
-﻿using Application.CustomerHandlers.Queries.GeByFilter;
+﻿using System.ComponentModel.DataAnnotations;
+using Application.CustomerHandlers.Queries.GeByFilter;
 
 namespace Presentation.Dto.RequestsDto.Customer;
 
 public class CustomerListWithPaginationRequestDto : BasePaginatedListParameter
 {
-    public CustomerListWithPaginationRequestDto(int pageNumber = 1, int pageSize = 10) : base(pageNumber, pageSize)
+    public CustomerListWithPaginationRequestDto(string? email, int pageNumber = 1, int pageSize = 10) : base(pageNumber,
+        pageSize)
     {
+        Email = email;
     }
+
+    [EmailAddress] public string? Email { get; }
 }
 
 public static class CustomerListWithPaginationRequestDtoMapper
@@ -16,7 +21,8 @@ public static class CustomerListWithPaginationRequestDtoMapper
     {
         return new GetCustomersByFilterQuery(
             PageId: customerListWithPaginationRequestDto.PageNumber,
-            Take: customerListWithPaginationRequestDto.PageSize
+            Take: customerListWithPaginationRequestDto.PageSize,
+            Email: customerListWithPaginationRequestDto.Email
         );
     }
 }

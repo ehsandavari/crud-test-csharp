@@ -7,5 +7,6 @@ namespace Application.CustomerHandlers.Queries.GeByFilter;
 public record GetCustomersByFilterQuery
 (
     int PageId,
-    int Take
+    int Take,
+    string? Email
 ) : BaseFilterParameter(PageId, Take), IBaseQuery<Tuple<IQueryable<GetCustomersByFilterVirtualModel>, int>>;

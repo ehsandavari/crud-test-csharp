@@ -47,3 +47,4 @@ webApplication.UseRequestLocalization(webApplication.Services.GetService<IOption
     .Value);
 webApplication.MapControllers();
 webApplication.Run();
+public partial class Program { }
