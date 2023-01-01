@@ -34,21 +34,18 @@ public static class UpdateCustomerRequestDtoMapper
     public static UpdateCustomerCommand ToUpdateCustomerCommand(
         this UpdateCustomerRequestDto updateCustomerRequestDto, long id)
     {
+        if (new PhoneAttribute().IsValid(updateCustomerRequestDto.PhoneNumber) is not true)
+            throw new BaseHttpException(HttpStatusCode.BadRequest, HttpExceptionTypes.PhoneNumberIsNotValid);
+
         var phoneNumber = PhoneNumberUtil.GetInstance().Parse(updateCustomerRequestDto.PhoneNumber, "");
         if (PhoneNumberUtil.GetInstance().IsValidNumber(phoneNumber) is not true)
-        {
             throw new BaseHttpException(HttpStatusCode.BadRequest, HttpExceptionTypes.PhoneNumberIsNotValid);
-        }
 
         if (new EmailAddressAttribute().IsValid(updateCustomerRequestDto.Email) is not true)
-        {
             throw new BaseHttpException(HttpStatusCode.BadRequest, HttpExceptionTypes.EmailAddressIsNotValid);
-        }
 
         if (new IbanAttribute().IsValid(updateCustomerRequestDto.BankAccountNumber) is not true)
-        {
             throw new BaseHttpException(HttpStatusCode.BadRequest, HttpExceptionTypes.BankAccountNumberIsNotValid);
-        }
 
         return new UpdateCustomerCommand
         (

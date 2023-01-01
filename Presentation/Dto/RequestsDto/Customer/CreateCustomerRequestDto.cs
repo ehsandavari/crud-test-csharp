@@ -34,21 +34,18 @@ public static class CreateCustomerRequestDtoMapper
     public static CreateCustomerCommand ToCreateCustomerCommand(
         this CreateCustomerRequestDto createCustomerRequestDto)
     {
+        if (new PhoneAttribute().IsValid(createCustomerRequestDto.PhoneNumber) is not true)
+            throw new BaseHttpException(HttpStatusCode.BadRequest, HttpExceptionTypes.PhoneNumberIsNotValid);
+
         var phoneNumber = PhoneNumberUtil.GetInstance().Parse(createCustomerRequestDto.PhoneNumber, "");
         if (PhoneNumberUtil.GetInstance().IsValidNumber(phoneNumber) is not true)
-        {
             throw new BaseHttpException(HttpStatusCode.BadRequest, HttpExceptionTypes.PhoneNumberIsNotValid);
-        }
-
+        
         if (new EmailAddressAttribute().IsValid(createCustomerRequestDto.Email) is not true)
-        {
             throw new BaseHttpException(HttpStatusCode.BadRequest, HttpExceptionTypes.EmailAddressIsNotValid);
-        }
 
         if (new IbanAttribute().IsValid(createCustomerRequestDto.BankAccountNumber) is not true)
-        {
             throw new BaseHttpException(HttpStatusCode.BadRequest, HttpExceptionTypes.BankAccountNumberIsNotValid);
-        }
 
         return new CreateCustomerCommand
         (
