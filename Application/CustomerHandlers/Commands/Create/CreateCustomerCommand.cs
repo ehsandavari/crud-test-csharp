@@ -12,7 +12,7 @@ public record CreateCustomerCommand
     PhoneNumber PhoneNumber,
     string Email,
     string BankAccountNumber
-) : IBaseCommand<bool>;
+) : IBaseCommand<long>;
 
 public static class CreateCustomerCommandMapper
 {

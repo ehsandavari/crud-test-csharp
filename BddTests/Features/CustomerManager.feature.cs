@@ -156,6 +156,91 @@ namespace BddTests.Features
 #line 16
         testRunner.Then("user can lookup all customers and filter by below properties and get \'1\' records", ((string)(null)), table3, "Then ");
 #line hidden
+                TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
+                            "FirstName",
+                            "LastName",
+                            "Email",
+                            "PhoneNumber",
+                            "DateOfBirth",
+                            "BankAccountNumber"});
+                table4.AddRow(new string[] {
+                            "john",
+                            "doe",
+                            "ehsan@gmail.com",
+                            "+989121234567",
+                            "2000-02-01",
+                            "NL35ABNA7925653426"});
+#line 19
+        testRunner.When("user creates a customer with following data by sending Create Customer Command", ((string)(null)), table4, "When ");
+#line hidden
+#line 22
+        testRunner.Then("user gets error with code \'2001\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+                TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
+                            "FirstName",
+                            "LastName",
+                            "Email",
+                            "PhoneNumber",
+                            "DateOfBirth",
+                            "BankAccountNumber"});
+                table5.AddRow(new string[] {
+                            "ehsan",
+                            "davari",
+                            "john@doe.com",
+                            "+989127654321",
+                            "2002-03-01",
+                            "NL35ABNA7925653426"});
+#line 23
+        testRunner.When("user creates a customer with following data by sending Create Customer Command", ((string)(null)), table5, "When ");
+#line hidden
+#line 26
+        testRunner.Then("user gets error with code \'2002\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+                TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
+                            "FirstName",
+                            "LastName",
+                            "Email",
+                            "PhoneNumber",
+                            "DateOfBirth",
+                            "BankAccountNumber"});
+                table6.AddRow(new string[] {
+                            "Jane",
+                            "William",
+                            "jane@william.com",
+                            "+989127654321",
+                            "2010-02-01",
+                            "NL35ABNA7925653426"});
+#line 27
+        testRunner.When("user edit customer with new data", ((string)(null)), table6, "When ");
+#line hidden
+                TechTalk.SpecFlow.Table table7 = new TechTalk.SpecFlow.Table(new string[] {
+                            "PageNumber",
+                            "PageSize",
+                            "Email"});
+                table7.AddRow(new string[] {
+                            "1",
+                            "10",
+                            "john@doe.com"});
+#line 30
+        testRunner.Then("user can lookup all customers and filter by below properties and get \'0\' records", ((string)(null)), table7, "Then ");
+#line hidden
+                TechTalk.SpecFlow.Table table8 = new TechTalk.SpecFlow.Table(new string[] {
+                            "PageNumber",
+                            "PageSize",
+                            "Email"});
+                table8.AddRow(new string[] {
+                            "1",
+                            "10",
+                            "jane@william.com"});
+#line 33
+        testRunner.And("user can lookup all customers and filter by below properties and get \'1\' records", ((string)(null)), table8, "And ");
+#line hidden
+#line 36
+        testRunner.When("user delete customer by Email of \'jane@william.com\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 37
+        testRunner.Then("user can get all records and get \'0\' records", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
             }
             this.ScenarioCleanup();
         }

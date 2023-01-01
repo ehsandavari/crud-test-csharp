@@ -14,7 +14,7 @@ public class ApiActionFilterAttribute : ActionFilterAttribute
         (
             new ApiResultWithMetaData
             (
-                new MetaData("ValidationException", validationProblemDetails.Errors)
+                new MetaData("ValidationException", StatusCodes.Status400BadRequest, validationProblemDetails.Errors)
             )
         );
     }

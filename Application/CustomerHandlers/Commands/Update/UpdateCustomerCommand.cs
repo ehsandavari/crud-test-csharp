@@ -12,4 +12,4 @@ public record UpdateCustomerCommand
     PhoneNumber PhoneNumber,
     string Email,
     string BankAccountNumber
-) : IBaseCommand<bool>; 
+) : IBaseCommand<long>; 

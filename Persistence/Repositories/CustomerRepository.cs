@@ -8,4 +8,9 @@ public class CustomerRepository : GenericRepository<Customer>, ICustomerReposito
     public CustomerRepository(DataBaseContext context) : base(context)
     {
     }
+
+    public Customer? Find(string email)
+    {
+        return DataBaseContext.Customers.FirstOrDefault(customer => customer.Email.Equals(email.ToLower()));
+    }
 }

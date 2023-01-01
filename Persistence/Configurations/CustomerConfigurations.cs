@@ -8,10 +8,10 @@ public class CustomerConfigurations : IEntityTypeConfiguration<Customer>
 {
     public void Configure(EntityTypeBuilder<Customer> builder)
     {
+        builder.Property(x => x.Email).HasColumnType("varchar").HasMaxLength(50);
         builder.HasIndex(customer => customer.Email).IsUnique();
         builder.Property(x => x.FirstName).HasColumnType("varchar").HasMaxLength(50);
         builder.Property(x => x.LastName).HasColumnType("varchar").HasMaxLength(50);
-        builder.Property(x => x.Email).HasColumnType("varchar").HasMaxLength(50);
         builder.HasIndex(customer => new
         {
             customer.FirstName,

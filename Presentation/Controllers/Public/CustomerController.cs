@@ -38,23 +38,23 @@ public class CustomerController : BasePublicController
     }
 
     [HttpPost]
-    [ProducesResponseType(typeof(ApiResult), StatusCodes.Status200OK)]
-    public async Task<ApiResult> Create([FromBody] CreateCustomerRequestDto request)
+    [ProducesResponseType(typeof(ApiResultWithData<long>), StatusCodes.Status200OK)]
+    public async Task<ApiResultWithData<long>> Create([FromBody] CreateCustomerRequestDto request)
     {
-        return ApiResult(await _mediator.Send(request.ToCreateCustomerCommand()));
+        return ApiResultWithData(await _mediator.Send(request.ToCreateCustomerCommand()));
     }
 
     [HttpPut("{id:long}")]
-    [ProducesResponseType(typeof(ApiResult), StatusCodes.Status200OK)]
-    public async Task<ApiResult> Update([FromBody] UpdateCustomerRequestDto request, long id)
+    [ProducesResponseType(typeof(ApiResultWithData<long>), StatusCodes.Status200OK)]
+    public async Task<ApiResultWithData<long>> Update([FromBody] UpdateCustomerRequestDto request, long id)
     {
-        return ApiResult(await _mediator.Send(request.ToUpdateCustomerCommand(id)));
+        return ApiResultWithData(await _mediator.Send(request.ToUpdateCustomerCommand(id)));
     }
 
-    [HttpDelete("{id:long}")]
-    [ProducesResponseType(typeof(ApiResult), StatusCodes.Status200OK)]
-    public async Task<ApiResult> Delete(long id)
+    [HttpDelete("{email}")]
+    [ProducesResponseType(typeof(ApiResultWithData<long>), StatusCodes.Status200OK)]
+    public async Task<ApiResultWithData<long>> Delete(string email)
     {
-        return ApiResult(await _mediator.Send(new DeleteCustomerCommand(id)));
+        return ApiResultWithData(await _mediator.Send(new DeleteCustomerCommand(email)));
     }
 }
