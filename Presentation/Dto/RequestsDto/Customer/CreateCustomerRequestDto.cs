@@ -24,9 +24,9 @@ public class CreateCustomerRequestDto
     [Required] public string FirstName { get; }
     [Required] public string LastName { get; }
     [Required] public DateOnly DateOfBirth { get; }
-    [Required] [Phone] public string PhoneNumber { get; }
-    [Required] [EmailAddress] public string Email { get; }
-    [Required] [Iban] public string BankAccountNumber { get; }
+    [Required] public string PhoneNumber { get; }
+    [Required] public string Email { get; }
+    [Required] public string BankAccountNumber { get; }
 }
 
 public static class CreateCustomerRequestDtoMapper
@@ -38,6 +38,16 @@ public static class CreateCustomerRequestDtoMapper
         if (PhoneNumberUtil.GetInstance().IsValidNumber(phoneNumber) is not true)
         {
             throw new BaseHttpException(HttpStatusCode.BadRequest, HttpExceptionTypes.PhoneNumberIsNotValid);
+        }
+
+        if (new EmailAddressAttribute().IsValid(createCustomerRequestDto.Email) is not true)
+        {
+            throw new BaseHttpException(HttpStatusCode.BadRequest, HttpExceptionTypes.EmailAddressIsNotValid);
+        }
+
+        if (new IbanAttribute().IsValid(createCustomerRequestDto.BankAccountNumber) is not true)
+        {
+            throw new BaseHttpException(HttpStatusCode.BadRequest, HttpExceptionTypes.BankAccountNumberIsNotValid);
         }
 
         return new CreateCustomerCommand
