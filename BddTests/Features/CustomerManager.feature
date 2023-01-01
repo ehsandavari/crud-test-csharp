@@ -11,6 +11,18 @@
 
     Scenario: Create Read Edit Delete Customer
         When user creates a customer with following data by sending Create Customer Command
+          | FirstName | LastName | Email           | PhoneNumber | DateOfBirth | BankAccountNumber  |
+          | john      | doe      | ehsan@gmail.com | +9843242    | 2000-02-01  | NL35ABNA7925653426 |
+        Then user gets error with code '1001'
+        When user creates a customer with following data by sending Create Customer Command
+          | FirstName | LastName | Email     | PhoneNumber   | DateOfBirth | BankAccountNumber  |
+          | john      | doe      | ehsan.com | +989121234567 | 2000-02-01  | NL35ABNA7925653426 |
+        Then user gets error with code '1002'
+        When user creates a customer with following data by sending Create Customer Command
+          | FirstName | LastName | Email           | PhoneNumber   | DateOfBirth | BankAccountNumber |
+          | john      | doe      | ehsan@gmail.com | +989121234567 | 2000-02-01  | NL12131312346     |
+        Then user gets error with code '1003'
+        When user creates a customer with following data by sending Create Customer Command
           | FirstName | LastName | Email        | PhoneNumber   | DateOfBirth | BankAccountNumber  |
           | John      | Doe      | john@doe.com | +989121234567 | 2000-02-01  | NL35ABNA7925653426 |
         Then user can lookup all customers and filter by below properties and get '1' records

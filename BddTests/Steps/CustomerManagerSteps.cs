@@ -112,7 +112,8 @@ public class CustomerManagerSteps
     {
         var client = _factory.CreateClient();
         var response = client.PostAsync(BaseUrl + "/public/customer/list-by-paginate",
-            new StringContent(JsonConvert.SerializeObject(new CustomerListWithPaginationRequestDto(null)), Encoding.UTF8,
+            new StringContent(JsonConvert.SerializeObject(new CustomerListWithPaginationRequestDto(null)),
+                Encoding.UTF8,
                 MediaTypeNames.Application.Json));
         response.Result.StatusCode.Should().Be(HttpStatusCode.OK);
         var responseBody = JsonConvert
