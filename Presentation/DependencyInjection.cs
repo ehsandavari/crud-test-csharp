@@ -1,6 +1,7 @@
 using System.Globalization;
 using IbanNet.DependencyInjection.ServiceProvider;
 using Microsoft.AspNetCore.Localization;
+using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
 using Presentation.Filters;
 using Presentation.Options;
@@ -20,7 +21,14 @@ public static class DependencyInjection
     private static void AddSwagger(IServiceCollection services, IConfiguration configuration)
     {
         services.AddEndpointsApiExplorer();
-        services.AddSwaggerGen();
+        services.AddSwaggerGen(options =>
+            options.MapType<DateOnly>(() => new OpenApiSchema
+            {
+                Type = "string",
+                Format = "date",
+                Example = new OpenApiString("2022-01-01")
+            })
+        );
         services.AddOptions<SwaggerGenOptions>().Configure(swagger =>
         {
             var swaggerOptions = new SwaggerOptions();
@@ -37,6 +45,7 @@ public static class DependencyInjection
                         Email = swaggerOptions.Email
                     }
                 });
+
 
             swagger.OperationFilter<SwaggerOperation>();
         });

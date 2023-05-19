@@ -34,17 +34,14 @@ public class ApiResultWithMetaData : ApiResult
 
 public class MetaData
 {
-    public MetaData(string? exceptionType, object? error)
+    public MetaData(string? exceptionType, int? exceptionCode, object? error)
     {
         ExceptionType = exceptionType;
+        ExceptionCode = exceptionCode;
         Error = error;
     }
 
-    public MetaData(string? exceptionType)
-    {
-        ExceptionType = exceptionType;
-    }
-
     [Required] public string? ExceptionType { get; }
+    [Required] public int? ExceptionCode { get; }
     [Required] public object? Error { get; }
 }

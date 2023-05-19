@@ -1,5 +1,6 @@
 ﻿using Application.Common.Mediator;
 using Domain.Entities;
+using Domain.ValueObject;
 
 namespace Application.CustomerHandlers.Commands.Create;
 
@@ -7,11 +8,11 @@ public record CreateCustomerCommand
 (
     string FirstName,
     string LastName,
-    DateTime DateOfBirth,
-    string PhoneNumber,
+    DateOnly DateOfBirth,
+    PhoneNumber PhoneNumber,
     string Email,
     string BankAccountNumber
-) : IBaseCommand<bool>;
+) : IBaseCommand<long>;
 
 public static class CreateCustomerCommandMapper
 {

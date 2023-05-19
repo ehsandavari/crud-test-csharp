@@ -6,11 +6,11 @@ namespace Presentation.Dto;
 
 public class PaginatedList<T> : BasePaginatedListParameter
 {
-    public PaginatedList(List<T> items, int count, int pageNumber, int pageSize) : base(pageNumber, pageSize)
+    public PaginatedList(List<T> items, int totalCount, int pageNumber, int pageSize) : base(pageNumber, pageSize)
     {
         Items = items;
-        TotalPages = (int) Math.Ceiling(count / (double) pageSize);
-        TotalCount = count;
+        TotalPages = (int) Math.Ceiling(totalCount / (double) pageSize);
+        TotalCount = totalCount;
     }
 
     public List<T> Items { get; }

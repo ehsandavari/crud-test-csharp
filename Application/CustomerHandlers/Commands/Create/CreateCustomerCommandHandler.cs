@@ -1,9 +1,11 @@
+using System.Net;
+using Application.Common.Exceptions;
 using Application.Common.Mediator;
 using Domain.Interfaces;
 
 namespace Application.CustomerHandlers.Commands.Create;
 
-public class CreateCustomerCommandHandler : IBaseCommandHandler<CreateCustomerCommand, bool>
+public class CreateCustomerCommandHandler : IBaseCommandHandler<CreateCustomerCommand, long>
 {
     private readonly IUnitOfWork _unitOfWork;
 
@@ -12,9 +14,23 @@ public class CreateCustomerCommandHandler : IBaseCommandHandler<CreateCustomerCo
         _unitOfWork = unitOfWork;
     }
 
-    public Task<bool> Handle(CreateCustomerCommand request, CancellationToken cancellationToken)
+    public async Task<long> Handle(CreateCustomerCommand request, CancellationToken cancellationToken)
     {
-        _unitOfWork.CustomerRepository.Add(request.ToCustomerEntity());
-        return Task.FromResult(_unitOfWork.Complete(cancellationToken).IsCompletedSuccessfully);
+        if (_unitOfWork.CustomerRepository.IsExists(
+                expression =>
+                    expression.FirstName.Equals(request.FirstName.ToLower()) &&
+                    expression.LastName.Equals(request.LastName.ToLower()) &&
+                    expression.DateOfBirth.Equals(request.DateOfBirth)
+            ))
+            throw new BaseHttpException(HttpStatusCode.BadRequest,
+                HttpExceptionTypes.DuplicateCustomerByFirstNameLastNameDateOfBirth);
+
+        if (_unitOfWork.CustomerRepository.IsExists(expression => expression.Email.Equals(request.Email.ToLower())))
+            throw new BaseHttpException(HttpStatusCode.BadRequest, HttpExceptionTypes.DuplicateCustomerByEmailAddress);
+
+        var entity = request.ToCustomerEntity();
+        _unitOfWork.CustomerRepository.Add(entity);
+        await _unitOfWork.Complete(cancellationToken);
+        return entity.Id;
     }
 }

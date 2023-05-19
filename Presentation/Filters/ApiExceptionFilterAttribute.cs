@@ -62,6 +62,7 @@ public class ApiExceptionFilterAttribute : ExceptionFilterAttribute
         context.Result =
             new ObjectResult(
                 new ApiResultWithMetaData(new MetaData(baseHttpException.HttpExceptionType.GetDisplayName(),
+                    (int) baseHttpException.HttpExceptionType,
                     _localizer[baseHttpException.HttpExceptionType.GetDisplayName()].Value)))
             {
                 StatusCode = (int) baseHttpException.HttpStatusCode
@@ -78,7 +79,7 @@ public class ApiExceptionFilterAttribute : ExceptionFilterAttribute
 
         context.Result =
             new ObjectResult(
-                new ApiResultWithMetaData(new MetaData(context.Exception.GetType().Name, details)))
+                new ApiResultWithMetaData(new MetaData(context.Exception.GetType().Name, StatusCodes.Status500InternalServerError, details)))
             {
                 StatusCode = StatusCodes.Status500InternalServerError
             };

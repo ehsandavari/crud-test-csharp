@@ -1,5 +1,6 @@
 ﻿using Application.Common.Models;
 using Domain.Entities;
+using Domain.ValueObject;
 
 namespace Application.CustomerHandlers.Queries.GeByFilter.VirtualModels;
 
@@ -7,8 +8,8 @@ public record GetCustomersByFilterVirtualModel
 (
     string FirstName,
     string LastName,
-    DateTime DateOfBirth,
-    string PhoneNumber,
+    DateOnly DateOfBirth,
+    PhoneNumber PhoneNumber,
     string Email,
     string BankAccountNumber
 ) : BaseVirtualModel;

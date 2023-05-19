@@ -1,12 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Application.CustomerHandlers.Queries.GeByFilter.VirtualModels;
+using Domain.ValueObject;
 
 namespace Presentation.Dto.ResponsesDto.Customer;
 
 public class ListCustomerWithPaginationResponseDto : BaseResponseDto
 {
-    public ListCustomerWithPaginationResponseDto(long id, string firstName, string lastName, DateTime dateOfBirth,
-        string phoneNumber, string email, string bankAccountNumber, DateTime createdAt, DateTime updatedAt) : base(
+    public ListCustomerWithPaginationResponseDto(long id, string firstName, string lastName, DateOnly dateOfBirth,
+        PhoneNumber phoneNumber, string email, string bankAccountNumber, DateTime createdAt, DateTime updatedAt) : base(
         id, createdAt, updatedAt)
     {
         FirstName = firstName;
@@ -19,8 +20,8 @@ public class ListCustomerWithPaginationResponseDto : BaseResponseDto
 
     [Required] public string FirstName { get; }
     [Required] public string LastName { get; }
-    [Required] public DateTime DateOfBirth { get; }
-    [Required] public string PhoneNumber { get; }
+    [Required] public DateOnly DateOfBirth { get; }
+    [Required] public PhoneNumber PhoneNumber { get; }
     [Required] public string Email { get; }
     [Required] public string BankAccountNumber { get; }
 }

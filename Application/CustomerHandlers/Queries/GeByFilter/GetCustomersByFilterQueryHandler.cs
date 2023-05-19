@@ -21,6 +21,9 @@ public class
     {
         var result = _unitOfWork.CustomerRepository.OrderByDescending(customer => customer.UpdatedAt).AsQueryable();
 
+        if (request.Email is not null)
+            result = result.Where(customer => customer.Email.Equals(request.Email.ToLower()));
+
         return Task.FromResult(
             new Tuple<IQueryable<GetCustomersByFilterVirtualModel>, int>(
                 result.Skip((request.PageNumber - 1) * request.PageSize).Take(request.PageSize)
